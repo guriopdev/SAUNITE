@@ -71,6 +71,7 @@
                     <p><strong>Uploaded by:</strong> ${item.uploader}</p>
                     <button class="btn btn-secondary" onclick="viewDocument(notes.find(p => p.id === ${item.id}), '${item.title}')">View</button>
                     <button class="btn" onclick="downloadDocument(notes.find(p => p.id === ${item.id}), '${item.title}')">Download</button>
+                    ${item.id > 1000 ? `<button class="btn" style="background:#dc3545; color:#fff;" onclick="deleteDocument(${item.id}, 'sau_custom_notes')">Delete</button>` : ''}
                 `;
                 list.appendChild(card);
             });

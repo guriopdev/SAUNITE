@@ -122,3 +122,12 @@ window.handleUpload = function(storageKey, newItem, fileInput, redirectUrl) {
         }
     }, 1000);
 };
+
+window.deleteDocument = function(id, storageKey) {
+    if (confirm("Are you sure you want to delete this document?")) {
+        let customItems = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        customItems = customItems.filter(item => item.id !== id);
+        localStorage.setItem(storageKey, JSON.stringify(customItems));
+        location.reload();
+    }
+};

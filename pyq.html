@@ -77,6 +77,7 @@
                     <br>
                     <button class="btn btn-secondary" onclick="viewDocument(pyqs.find(p => p.id === ${item.id}), '${item.subject}')">View</button>
                     <button class="btn" onclick="downloadDocument(pyqs.find(p => p.id === ${item.id}), '${item.subject}')">Download</button>
+                    ${item.id > 1000 ? `<button class="btn" style="background:#dc3545; color:#fff;" onclick="deleteDocument(${item.id}, 'sau_custom_pyqs')">Delete</button>` : ''}
                 `;
                 list.appendChild(card);
             });
