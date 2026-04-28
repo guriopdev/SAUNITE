@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Notes | SAU Scholar Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>SAU Scholar Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="pyq.html">PYQs</a>
+            <a href="notes.html">Notes</a>
+            <a href="profile.html">Profile</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h2>Upload Study Notes</h2>
+            <p>Share your notes with the SAU community.</p>
+            <br>
+            <form id="upload-notes-form">
+                <div class="form-group">
+                    <label for="note-title">Note Title</label>
+                    <input type="text" id="note-title" placeholder="e.g. Unit 2 - Macroeconomics" required>
+                </div>
+                <div class="form-group">
+                    <label for="note-subject">Subject</label>
+                    <input type="text" id="note-subject" placeholder="e.g. Economics" required>
+                </div>
+                <div class="form-group">
+                    <label for="note-desc">Description (Optional)</label>
+                    <textarea id="note-desc" rows="3" placeholder="Briefly describe the content..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="note-file">Attach File (PDF/JPG/PNG)</label>
+                    <input type="file" id="note-file" accept=".pdf,.jpg,.png" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Upload Notes</button>
+            </form>
+            <div id="success-msg" style="display: none; color: #28a745; margin-top: 1rem; text-align: center; font-weight: bold;">
+                Upload Successful! Redirecting to notes section...
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('upload-notes-form').onsubmit = function(e) {
+            e.preventDefault();
+            const uploaderName = Math.random() < 0.5 ? 'gurjyot singh' : 'devansh dhaka';
+            const userRole = 'teacher';
+            const newNote = {
+                id: Date.now(),
+                title: document.getElementById('note-title').value,
+                subject: document.getElementById('note-subject').value,
+                uploader: uploaderName,
+                role: userRole,
+                verified: true
+            };
+            handleUpload('sau_custom_notes', newNote, document.getElementById('note-file'), 'notes.html');
+        };
+    </script>
+</body>
+</html>

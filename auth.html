@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SAU Scholar Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .error-message {
+            color: #d9534f;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>SAU Scholar Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+
+    <div class="auth-container">
+        <h2>Login</h2>
+        <p>Please use your institutional email to continue.</p>
+        <br>
+        <div class="form-group">
+            <input type="email" id="email" placeholder="yourname@sau.ac.in" required>
+        </div>
+        <button class="btn" id="login-btn" style="width: 100%;">Sign In with Google</button>
+        <p id="error-msg" class="error-message">Access restricted to @students.sau.ac.in email addresses only.</p>
+    </div>
+
+    <script>
+        document.getElementById('login-btn').addEventListener('click', function () {
+            const email = document.getElementById('email').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            if (email.endsWith('@students.sau.ac.in')) {
+
+                localStorage.setItem('sau_user', JSON.stringify({
+                    email: email,
+                    role: email.includes('prof') ? 'teacher' : 'student',
+                    name: email.split('@')[0]
+                }));
+                window.location.href = 'pyq.html';
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>

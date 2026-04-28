@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Notes | SAU Scholar Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>SAU Scholar Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="pyq.html">PYQs</a>
+            <a href="notes.html">Notes</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+            <h2>Study Notes</h2>
+            <div>
+                <a href="#" onclick="alert('Request sent to your teachers successfully!')" class="btn btn-secondary"
+                    style="margin-right: 1rem;">Request Notes from Teacher</a>
+                <a href="upload-notes.html" class="btn">+ Upload Notes</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="search-notes" placeholder="Search notes by subject or title...">
+        </div>
+
+        <div class="card-grid" id="notes-list">
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; CompliedOnGhosts. For South Asian University Internal Use Only.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        let notes = [
+            { id: 1, title: 'Hashing', subject: 'Data Structures', uploader: Math.random() < 0.5 ? 'gurjyot singh' : 'devansh dhaka', role: 'teacher', verified: true, files: ['assets/notes/Data-structure-sem-2/6. Hashing.pdf'] },
+            { id: 2, title: 'Quantum Mechanics Unit 2', subject: 'Physics', uploader: Math.random() < 0.5 ? 'gurjyot singh' : 'devansh dhaka', role: 'teacher', verified: true, files: ['assets/notes/physics-quantum-sem-2/Unit2_QM.pdf'] }
+        ];
+
+
+        const customNotes = JSON.parse(localStorage.getItem('sau_custom_notes') || '[]');
+        notes = [...customNotes.reverse(), ...notes];
+
+        function renderNotes(data) {
+            const list = document.getElementById('notes-list');
+            list.innerHTML = '';
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const badgeClass = item.verified ? 'badge-teacher' : 'badge-student';
+                const badgeText = item.verified ? '✓ Verified Teacher' : 'Student Upload';
+
+                card.innerHTML = `
+                    <span class="badge ${badgeClass}">${badgeText}</span>
+                    <h3>${item.title}</h3>
+                    <p><strong>Subject:</strong> ${item.subject}</p>
+                    <p><strong>Uploaded by:</strong> ${item.uploader}</p>
+                    <button class="btn btn-secondary" onclick="viewDocument(notes.find(p => p.id === ${item.id}), '${item.title}')">View</button>
+                    <button class="btn" onclick="downloadDocument(notes.find(p => p.id === ${item.id}), '${item.title}')">Download</button>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+
+        document.getElementById('search-notes').oninput = function () {
+            const search = this.value.toLowerCase();
+            const filtered = notes.filter(item =>
+                item.title.toLowerCase().includes(search) ||
+                item.subject.toLowerCase().includes(search)
+            );
+            renderNotes(filtered);
+        };
+
+        renderNotes(notes);
+    </script>
+</body>
+
+</html>

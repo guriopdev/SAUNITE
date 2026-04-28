@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAU Scholar Hub | Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>SAU Scholar Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="pyq.html">PYQs</a>
+            <a href="notes.html">Notes</a>
+            <a href="auth.html" id="login-link">Login</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <marquee
+                style="font-size: 1.5rem; font-weight: bold; background-color: #744577; color: #F0E9B6; border: 3px solid #000; padding: 10px; margin-bottom: 2rem; box-shadow: 4px 4px 0px #000;">
+                UPLOAD COMPLETE: NEW PYQS AVAILABLE! || START DOWNLOADING NOW! </marquee>
+            <br>
+            <h2 class="retro-title"><span id="typewriter"></span><span class="blinking-cursor">_</span></h2>
+            <br>
+            <p class="retro-subtitle">Access Previous Year Question Papers (PYQs) and Study Notes in one place.</p>
+            <br><br>
+            <a href="auth.html" class="btn">Get Started</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="card-grid">
+            <div class="card">
+                <h3>PYQ Repository</h3>
+                <p>Find and download previous year question papers for all departments and subjects.</p>
+                <a href="pyq.html" class="btn btn-secondary">Browse PYQs</a>
+            </div>
+            <div class="card">
+                <h3>Study Notes</h3>
+                <p>Access verified teacher notes and student-shared study materials.</p>
+                <a href="notes.html" class="btn btn-secondary">View Notes</a>
+            </div>
+            <div class="card">
+                <h3>Contribute</h3>
+                <p>Help your peers by uploading papers and notes you have collected.</p>
+                <a href="upload-pyq.html" class="btn btn-secondary">Upload Now</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; CompliedOnGhosts. For South Asian University Internal Use Only.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        const text = "Centralized Repository for SAU Students";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        window.onload = typeWriter;
+    </script>
+</body>
+
+</html>

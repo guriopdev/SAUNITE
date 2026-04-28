@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYQ Repository | SAU Scholar Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>SAU Scholar Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="pyq.html">PYQs</a>
+            <a href="notes.html">Notes</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2>Previous Year Question Papers</h2>
+            <a href="upload-pyq.html" class="btn">+ Upload PYQ</a>
+        </div>
+
+        <div class="form-group" style="display: flex; gap: 1rem;">
+            <input type="text" id="search-input" placeholder="Search by subject or year...">
+            <select id="dept-filter" style="width: 200px;">
+                <option value="">All Departments</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Economics">Economics</option>
+                <option value="Law">Law</option>
+            </select>
+        </div>
+
+        <div class="card-grid" id="pyq-list">
+
+        </div>
+    </div>
+
+
+
+    <footer>
+        <p>&copy; CompliedOnGhosts. For South Asian University Internal Use Only.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+
+        let pyqs = [
+            { id: 2, subject: 'Linear Algebra', dept: 'Mathematics', year: '2026', sem: 'Even', uploader: Math.random() < 0.5 ? 'gurjyot singh' : 'devansh dhaka', files: ['assets/maths-linear algebra/WhatsApp Image 2026-04-24 at 1.40.13 PM (6).jpeg', 'assets/maths-linear algebra/WhatsApp Image 2026-04-24 at 1.40.13 PM (7).jpeg'] },
+            { id: 7, subject: 'Computer Programming', dept: 'Computer Science', year: '2026', sem: 'Odd', uploader: Math.random() < 0.5 ? 'gurjyot singh' : 'devansh dhaka', files: ['assets/computer-programming-sem-1/WhatsApp Image 2026-04-24 at 1.40.12 PM.jpeg', 'assets/computer-programming-sem-1/WhatsApp Image 2026-04-24 at 1.40.13 PM.jpeg'] },
+            { id: 8, subject: 'Advanced Calculus', dept: 'Mathematics', year: '2026', sem: 'Odd', uploader: Math.random() < 0.5 ? 'gurjyot singh' : 'devansh dhaka', files: ['assets/math-advance-calculus-sem-1/WhatsApp Image 2026-04-24 at 1.40.12 PM (1).jpeg', 'assets/math-advance-calculus-sem-1/WhatsApp Image 2026-04-24 at 1.40.12 PM (2).jpeg'] },
+            { id: 9, subject: 'Optical Fibre', dept: 'Computer Science', year: '2026', sem: 'Even', uploader: Math.random() < 0.5 ? 'gurjyot singh' : 'devansh dhaka', files: ['assets/physics-sem-2-optical-fibre/WhatsApp Image 2026-04-24 at 1.40.13 PM (13).jpeg'] },
+            { id: 10, subject: 'Python', dept: 'Computer Science', year: '2026', sem: 'Even', uploader: Math.random() < 0.5 ? 'gurjyot singh' : 'devansh dhaka', files: ['assets/python-sem-2/WhatsApp Image 2026-04-29 at 3.11.30 AM.jpeg', 'assets/python-sem-2/WhatsApp Image 2026-04-29 at 3.11.31.jpeg'] }
+        ];
+
+
+        const customPYQs = JSON.parse(localStorage.getItem('sau_custom_pyqs') || '[]');
+        pyqs = [...customPYQs.reverse(), ...pyqs];
+
+        function renderPYQs(data) {
+            const list = document.getElementById('pyq-list');
+            list.innerHTML = '';
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${item.subject}</h3>
+                    <p><strong>Dept:</strong> ${item.dept}</p>
+                    <p><strong>Year:</strong> ${item.year} (${item.sem} Sem)</p>
+                    <p><strong>Uploaded by:</strong> ${item.uploader}</p>
+                    <br>
+                    <button class="btn btn-secondary" onclick="viewDocument(pyqs.find(p => p.id === ${item.id}), '${item.subject}')">View</button>
+                    <button class="btn" onclick="downloadDocument(pyqs.find(p => p.id === ${item.id}), '${item.subject}')">Download</button>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+
+
+        document.getElementById('search-input').oninput = filterData;
+        document.getElementById('dept-filter').onchange = filterData;
+
+        function filterData() {
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const dept = document.getElementById('dept-filter').value;
+
+            const filtered = pyqs.filter(item => {
+                const matchesSearch = item.subject.toLowerCase().includes(search) || item.year.includes(search);
+                const matchesDept = dept === '' || item.dept === dept;
+                return matchesSearch && matchesDept;
+            });
+            renderPYQs(filtered);
+        }
+
+
+        renderPYQs(pyqs);
+    </script>
+</body>
+
+</html>

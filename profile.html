@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | SAU Scholar Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>SAU Scholar Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="pyq.html">PYQs</a>
+            <a href="notes.html">Notes</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card" style="margin-bottom: 2rem;">
+            <h2>User Profile</h2>
+            <p><strong>Name:</strong> <span id="user-name">Rahul Sharma</span></p>
+            <p><strong>Email:</strong> <span id="user-email">rahul@sau.ac.in</span></p>
+            <p><strong>Role:</strong> <span id="user-role" class="badge badge-student">Student</span></p>
+        </div>
+
+
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+
+        if (user) {
+            document.getElementById('user-name').innerText = user.name;
+            document.getElementById('user-email').innerText = user.email;
+            const roleBadge = document.getElementById('user-role');
+            roleBadge.innerText = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+            roleBadge.className = 'badge ' + (user.role === 'teacher' ? 'badge-teacher' : 'badge-student');
+        }
+
+        document.getElementById('logout-btn').onclick = function() {
+            localStorage.removeItem('sau_user');
+            window.location.href = 'index.html';
+        };
+    </script>
+</body>
+</html>
