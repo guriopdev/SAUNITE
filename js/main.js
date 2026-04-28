@@ -54,11 +54,25 @@ window.viewDocument = function(item, fallbackTitle) {
 window.downloadDocument = function(item, fallbackTitle) {
     if (item.files && item.files.length > 0) {
         item.files.forEach((file, index) => {
-            const isPdf = file.toLowerCase().endsWith('.pdf') || file.startsWith('data:application/pdf');
+            let ext = '.jpeg';
+            if (file.startsWith('data:')) {
+                const mime = file.substring(5, file.indexOf(';'));
+                if (mime.includes('/')) {
+                    ext = '.' + mime.split('/')[1];
+                }
+            } else {
+                const parts = file.split('.');
+                if (parts.length > 1) {
+                    ext = '.' + parts.pop().toLowerCase();
+                }
+            }
+            if (ext === '.pdf') ext = '.pdf'; // Just keeping it clear
+            
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = file;
-            a.download = fallbackTitle.replace(/\s+/g, '_') + (isPdf ? '.pdf' : `_Part${index + 1}.jpeg`);
+            const suffix = ext === '.pdf' ? ext : `_Part${index + 1}${ext}`;
+            a.download = fallbackTitle.replace(/\s+/g, '_') + suffix;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
