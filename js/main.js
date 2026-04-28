@@ -33,7 +33,8 @@ window.viewDocument = function(item, fallbackTitle) {
         let htmlStr = "<html><head><title>Viewing " + fallbackTitle + "</title><base href=\"" + window.location.href + "\"></head>";
         htmlStr += "<body style=\"text-align:center; background:#333; margin:0; padding:20px;\">";
         item.files.forEach(function(file) {
-            if(file.toLowerCase().endsWith('.pdf')) {
+            const isPdf = file.toLowerCase().endsWith('.pdf') || file.startsWith('data:application/pdf');
+            if(isPdf) {
                  htmlStr += "<iframe src=\"" + file + "\" style=\"width:100%; height:95vh; border:none;\"></iframe>";
             } else {
                  htmlStr += "<img src=\"" + file + "\" style=\"max-width:100%; margin-bottom: 20px; box-shadow: 0 0 10px #000; border: 3px solid #fff;\"><br>";
@@ -53,10 +54,11 @@ window.viewDocument = function(item, fallbackTitle) {
 window.downloadDocument = function(item, fallbackTitle) {
     if (item.files && item.files.length > 0) {
         item.files.forEach((file, index) => {
+            const isPdf = file.toLowerCase().endsWith('.pdf') || file.startsWith('data:application/pdf');
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = file;
-            a.download = fallbackTitle.replace(/\s+/g, '_') + (file.toLowerCase().endsWith('.pdf') ? '.pdf' : `_Part${index + 1}.jpeg`);
+            a.download = fallbackTitle.replace(/\s+/g, '_') + (isPdf ? '.pdf' : `_Part${index + 1}.jpeg`);
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
